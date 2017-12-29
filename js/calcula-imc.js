@@ -29,7 +29,13 @@ for(var i=0; i<pacientes.length; i++){
     }
 
     if(valPeso && valAltura){
-        trIMC.textContent = (peso / (altura * altura)).toFixed(2);
+        trIMC.textContent = calculaIMC(peso, altura);
     }
+
+}
+
+function calculaIMC(peso, altura) {
+
+    return (peso / (altura * altura)).toFixed(2);
 
 }
