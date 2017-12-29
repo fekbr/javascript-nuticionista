@@ -4,10 +4,20 @@ botao.addEventListener("click", function(event){
 
     var form = document.querySelector("#form-adicionar-paciente");
     var pessoa = obtemDadosPaciente(form);
-    var tabela = document.querySelector("#tabela-pacientes");
-    tabela.appendChild(montaTr(pessoa));
+    var erros = validaPessoa(pessoa);
 
-    form.reset();
+    if(erros.length > 0){
+        
+        exibeMensagensDeErro(erros);
+        
+    } else {
+
+        var tabela = document.querySelector("#tabela-pacientes");
+        tabela.appendChild(montaTr(pessoa));
+
+        form.reset();
+        document.querySelector("#mensagens-erro").innerHTML = "";
+    }
 
 });
 
@@ -44,5 +54,43 @@ function montaTd(dado, classe){
     dadoTd.textContent = dado;
 
     return dadoTd;
+
+}
+
+function validaPessoa(pessoa) {
+
+    var erros = [];
+
+    if(pessoa.nome.length == 0){
+        erros.push("Nome não informado");
+    }
+    
+    if(!validaPeso(pessoa.peso) || pessoa.peso.length==0){
+        erros.push("Peso inválido");
+    }
+
+    if(!validaAltura(pessoa.altura) || pessoa.altura.length==0){
+        erros.push("Altura inválida");
+    }
+
+    if(pessoa.gordura.length==0){
+        erros.push("Índice de gordura não informado");
+    }
+
+    return erros;
+    
+}
+
+function exibeMensagensDeErro(erros) {
+
+    var ul = document.querySelector("#mensagens-erro");
+    ul.innerHTML = "";
+
+    erros.forEach(function(erro) {
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
+
 
 }
