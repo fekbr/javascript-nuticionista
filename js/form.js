@@ -92,5 +92,4 @@ function exibeMensagensDeErro(erros) {
         ul.appendChild(li);
     });
 
-
 }
