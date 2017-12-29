@@ -3,31 +3,46 @@ botao.addEventListener("click", function(event){
     event.preventDefault();
 
     var form = document.querySelector("#form-adicionar-paciente");
-    var nome = form.nome.value;
-    var peso = form.peso.value;
-    var altura = form.altura.value;
-    var gordura = form.gordura.value;
-
-    var pacienteTr = document.createElement("tr");
-    var nomeTd = document.createElement("td");
-    var pesoTd = document.createElement("td");
-    var alturaTd = document.createElement("td");
-    var gorduraTd = document.createElement("td");
-    var imcTd = document.createElement("td");
-
-    nomeTd.textContent = nome;
-    pesoTd.textContent = peso;
-    alturaTd.textContent = altura;
-    gorduraTd.textContent = gordura;
-    imcTd.textContent = calculaIMC(peso, altura);
-
-    pacienteTr.appendChild(nomeTd);
-    pacienteTr.appendChild(pesoTd);
-    pacienteTr.appendChild(alturaTd);
-    pacienteTr.appendChild(gorduraTd);
-    pacienteTr.appendChild(imcTd);
-
+    var pessoa = obtemDadosPaciente(form);
     var tabela = document.querySelector("#tabela-pacientes");
-    tabela.appendChild(pacienteTr);
+    tabela.appendChild(montaTr(pessoa));
+
+    form.reset();
 
 });
+
+function obtemDadosPaciente(form) {
+
+    var pessoa = {
+        nome: form.nome.value,
+        peso: form.peso.value,
+        altura: form.altura.value,
+        gordura: form.gordura.value,
+        imc: calculaIMC(form.peso.value, form.altura.value)
+    }
+
+    return pessoa;
+}
+
+function montaTr(pessoa){
+    var pacienteTr = document.createElement("tr");
+    pacienteTr.classList.add("paciente");
+
+    pacienteTr.appendChild(montaTd(pessoa.nome, "info-nome"));
+    pacienteTr.appendChild(montaTd(pessoa.peso, "info-peso"));
+    pacienteTr.appendChild(montaTd(pessoa.altura, "info-altura"));
+    pacienteTr.appendChild(montaTd(pessoa.gordura, "info-gordura"));
+    pacienteTr.appendChild(montaTd(pessoa.imc, "info-imc"));
+
+    return pacienteTr;
+}
+
+function montaTd(dado, classe){
+
+    var dadoTd = document.createElement("td");
+    dadoTd.classList.add(classe);
+    dadoTd.textContent = dado;
+
+    return dadoTd;
+
+}
