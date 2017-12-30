@@ -12,14 +12,18 @@ botao.addEventListener("click", function(event){
         
     } else {
 
-        var tabela = document.querySelector("#tabela-pacientes");
-        tabela.appendChild(montaTr(pessoa));
+        adicionaPacienteNaTabela(pessoa);
 
         form.reset();
         document.querySelector("#mensagens-erro").innerHTML = "";
     }
 
 });
+
+function adicionaPacienteNaTabela(pessoa) {
+    var tabela = document.querySelector("#tabela-pacientes");
+    tabela.appendChild(montaTr(pessoa));
+}
 
 function obtemDadosPaciente(form) {
 
